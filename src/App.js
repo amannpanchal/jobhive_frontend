@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import Application from './Application/Application'
+import { Button, useColorMode } from '@chakra-ui/react'
+import { SunIcon, MoonIcon } from "@chakra-ui/icons";
+import { loadProfile } from './redux/actions/User/User';
+import { useDispatch } from 'react-redux';
 
-function App() {
+
+const App = () => {
+  const dispatch = useDispatch();
+  const { colorMode, toggleColorMode } = useColorMode();
+  useEffect(() => {
+    dispatch(loadProfile())
+  })
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* <Button
+        
+        rounded={'full'}
+   
+        pos={"absolute"}
+        top={3}
+        right={3}
+        variant={'solid'}
+        p  = {3}
+        onClick={toggleColorMode}
+      >
+        {colorMode == "dark" ? <SunIcon /> : <MoonIcon />}
+      </Button> */}
+      <Application />
     </div>
   );
 }
 
-export default App;
+export default App
