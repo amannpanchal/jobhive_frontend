@@ -7,9 +7,15 @@ export const login = async (details) => {
       const { email, password, role } = details;
   const res =       await axios.post(`${MAIN_URL}/user/login`, {
             email,password,role
-  })
+  },{
+            headers:{
+                'Content-type': 'application/json',
+            },
+            withCredentials:true,
+        }
+      )
       
-        Cookies.set("token", res.data.token, { expires: 7 }); 
+
       return res.data
         
     }
