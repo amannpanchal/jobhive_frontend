@@ -49,7 +49,10 @@ const Login = () => {
                     duration: 3000,
                     isClosable: true,
                 });
-               navigate('/')
+               await  dispatch(loadProfile());
+                navigate('/')
+                  window.location.reload();
+               
             } else {
                 toast({
                     title: 'Login failed',
