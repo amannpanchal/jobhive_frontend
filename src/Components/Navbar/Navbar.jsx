@@ -14,11 +14,14 @@ const Navbar = () => {
 
    
     const navigate = useNavigate();
+
     const logoutUser =async () => {
       await  logout()
         await dispatch(loadProfile());
         navigate('/login')
      window.location.reload();
+
+
     }
 
     return (
