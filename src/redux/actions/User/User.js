@@ -23,7 +23,6 @@ export const login = async (details) => {
     const { data } = await axiosInstance.post("/user/login", {
       email,
       password,
-      role,
     });
 
     return data;
