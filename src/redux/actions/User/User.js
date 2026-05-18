@@ -9,12 +9,20 @@ import { MAIN_URL } from "../../../URLS/config";
 
 const axiosInstance = axios.create({
   baseURL: MAIN_URL,
-  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
 // LOGIN
 export const login = async (details) => {
   try {
@@ -24,6 +32,7 @@ export const login = async (details) => {
       email,
       password,
     });
+    localStorage.setItem("token", data.token);
 
     return data;
   } catch (e) {
