@@ -76,6 +76,7 @@ export const profileUpdated = async (options) => {
 // LOGOUT
 export const logout = async () => {
   try {
+    localStorage.removeItem('token')
     const { data } = await axiosInstance.get("/user/logout");
 
     return data;
