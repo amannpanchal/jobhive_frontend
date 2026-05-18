@@ -1,94 +1,94 @@
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import { MAIN_URL } from '../../../URLS/config'
-import { loadUserFailure, loadUserRequest, loadUserSuccess } from '../../reducers/User/User';
+
+import {
+  loadUserFailure,
+  loadUserRequest,
+  loadUserSuccess,
+} from "../../reducers/User/User";
+import axios from "axios";
+import { MAIN_URL } from "../../../URLS/config";
+
+const axiosInstance = axios.create({
+  baseURL: MAIN_URL,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// LOGIN
 export const login = async (details) => {
-    try {
-      const { email, password, role } = details;
-  const res =       await axios.post(`${MAIN_URL}/user/login`, {
-            email,password,role
-  },{
-            headers:{
-                'Content-type': 'application/json',
-            },
-            withCredentials:true,
-        }
-      )
-      
+  try {
+    const { email, password, role } = details;
 
-      return res.data
-        
-    }
-    catch (e) {
-        console.log("the error in login is ",e)
-    }
+    const { data } = await axiosInstance.post("/user/login", {
+      email,
+      password,
+      role,
+    });
 
+    return data;
+  } catch (e) {
+    console.log("the error in login is ", e);
+  }
+};
 
-}
+// REGISTER
 export const register = async (options) => {
   try {
-      const { email, password, role, name, phone } = options;
-       const headers = {
-         "Content-Type": "application/json",
-           "Sec-Fetch-Mode": "navigate",
-           "Sec-Fetch-Site": "cross-site",
-       };
-    const response = await axios.post(`${MAIN_URL}/user/register`, {
+    const { email, password, role, name, phone } = options;
+
+    const { data } = await axiosInstance.post("/user/register", {
       email,
       password,
       role,
       name,
       phone,
-    },
-        headers
-    );
-    return response.data; 
+    });
+
+    return data;
   } catch (error) {
     console.error("Error in register:", error);
-  
   }
 };
+
+// UPDATE PROFILE
 export const profileUpdated = async (options) => {
   try {
-   
-    
-  const res =   await axios.put(`${MAIN_URL}/user/update`, options
-    )
-    return res.data
-    
+    const { data } = await axiosInstance.put(
+      "/user/update",
+      options
+    );
+
+    return data;
   } catch (error) {
-    console.error("Error in register:", error);
-  
+    console.error("Error in profile update:", error);
   }
 };
-export const logout = async (options) => {
+
+// LOGOUT
+export const logout = async () => {
   try {
-   
-    
-    const res = await axios.get(`${MAIN_URL}/user/logout`, {
-    withCredentials : true
-  }
-    )
-    return res.data
-    
+    const { data } = await axiosInstance.get("/user/logout");
+
+    return data;
   } catch (error) {
-    console.error("Error in register:", error);
-  
+    console.error("Error in logout:", error);
   }
 };
-export const loadProfile = (options ) =>async (dispatch)  =>  {
+
+// LOAD PROFILE
+export const loadProfile = () => async (dispatch) => {
   try {
     dispatch(loadUserRequest());
-  const data = await axios.get(`${MAIN_URL}/user/profile`, {
-    withCredentials: true,
-  });
-    console.log(data,"the data is" );
 
-    dispatch(loadUserSuccess(data?.data?.user))
-    
+    const { data } = await axiosInstance.get("/user/profile");
 
+    console.log(data, "the data is");
+
+    dispatch(loadUserSuccess(data?.user));
   } catch (e) {
     console.log("the error is ", e);
-    dispatch(loadUserFailure(e.message))
+
+    dispatch(loadUserFailure(e.message));
   }
-}
+};
