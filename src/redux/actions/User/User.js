@@ -1,7 +1,6 @@
 
 import {
   loadUserFailure,
-  loadUserRequest,
   loadUserSuccess,
 } from "../../reducers/User/User";
 import axios from "axios";
@@ -88,7 +87,7 @@ export const logout = async () => {
 // LOAD PROFILE
 export const loadProfile = () => async (dispatch) => {
   try {
-    dispatch(loadUserRequest());
+    // dispatch(loadUserRequest());
 
     const { data } = await axiosInstance.get("/user/profile");
 
