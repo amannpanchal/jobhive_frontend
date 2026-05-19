@@ -12,7 +12,6 @@ import { MAIN_URL } from "../../../URLS/config";
 
 const axiosInstance = axios.create({
   baseURL: MAIN_URL,
-  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
