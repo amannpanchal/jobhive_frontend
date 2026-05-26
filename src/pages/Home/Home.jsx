@@ -84,7 +84,7 @@ function Home() {
             width="100vw"
             left="0"
             color="black" px={4} py={3} textAlign="center">
-            <p>&copy; 2024 JOBhive. All rights reserved.</p>
+            <p>&copy; 2026 JOBhive. All rights reserved.</p>
           </Box>
         </Box>
       </Flex>
